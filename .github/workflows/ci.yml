@@ -1,0 +1,51 @@
+name: Junexis Tooling CI
+
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Build and test tooling
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build and test parser
+        working-directory: parser
+        run: |
+          npm ci
+          npm test
+          npm run build
+
+      - name: Build and test formatter
+        working-directory: formatter
+        run: |
+          npm ci
+          npm test
+          npm run build
+
+      - name: Build, test and package VS Code extension
+        working-directory: vscode-extension
+        run: |
+          npm ci
+          npm test
+          npm run package

@@ -1,0 +1,430 @@
+{
+  "name": "junexislang",
+  "displayName": "Junexis Language",
+  "description": "Obsługa języka Junexis (.jnx): integracja z kompilatorem, kolorowanie składni i fragmenty kodu",
+  "version": "0.1.77",
+  "publisher": "junexis-lang",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andrzejskutnik/junexis-tooling.git",
+    "directory": "vscode-extension"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets"
+  ],
+  "keywords": [
+    "junexis",
+    "junexislang",
+    "jnx",
+    "distributed systems",
+    "embedded",
+    "IoT"
+  ],
+  "activationEvents": [
+    "onLanguage:junexis",
+    "workspaceContains:**/junexis.project.toml"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "junexis",
+        "aliases": [
+          "Junexis",
+          "junexislang"
+        ],
+        "extensions": [
+          ".jnx"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "junexis",
+        "scopeName": "source.jnx",
+        "path": "./syntaxes/junexis.tmLanguage.json"
+      },
+      {
+        "scopeName": "junexis.markdown.codeblock",
+        "path": "./syntaxes/junexis-markdown-injection.tmLanguage.json",
+        "injectTo": [
+          "text.html.markdown"
+        ]
+      }
+    ],
+    "snippets": [
+      {
+        "language": "junexis",
+        "path": "./snippets/junexis.code-snippets"
+      }
+    ],
+    "iconThemes": [
+      {
+        "id": "junexis-icons",
+        "label": "Junexis Icons",
+        "path": "./icons/junexis-icon-theme.json"
+      }
+    ],
+    "breakpoints": [
+      {
+        "language": "junexis"
+      }
+    ],
+    "commands": [
+      { "command": "junexis.application.run", "title": "Junexis: Uruchom aplikację" },
+      { "command": "junexis.application.open", "title": "Junexis: Otwórz panel aplikacji" },
+      { "command": "junexis.application.stop", "title": "Junexis: Zatrzymaj aplikację" },
+      {
+        "command": "junexis.check",
+        "title": "Junexis: Sprawdź plik",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.checkProject",
+        "title": "Junexis: Sprawdź projekt",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.compile",
+        "title": "Junexis: Kompiluj plik",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.buildProject",
+        "title": "Junexis: Zbuduj projekt",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.scaffoldExterns",
+        "title": "Junexis: Utwórz szkielety extern",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.cleanProject",
+        "title": "Junexis: Wyczyść projekt",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.doctorProject",
+        "title": "Junexis: Zdiagnozuj projekt",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.openDiagnosticHelp",
+        "title": "Junexis: Otwórz pomoc diagnostyczną",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.restartServer",
+        "title": "Junexis: Uruchom ponownie serwer językowy",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.diagnoseSetup",
+        "title": "Junexis: Sprawdź konfigurację",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.showActivationProfile",
+        "title": "Junexis: Pokaż profil aktywacji",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.mentor.analyze",
+        "title": "Junexis: Przeanalizuj bieżącą kompilację z Mentorem",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.mentor.previewRefactoring",
+        "title": "Junexis Mentor: Podejrzyj bezpieczną refaktoryzację",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.artifacts.refresh",
+        "title": "Junexis: Odśwież artefakty",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.artifacts.showStatus",
+        "title": "Junexis: Pokaż stan artefaktów",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.artifacts.buildTarget",
+        "title": "Zbuduj wygenerowany target",
+        "category": "Junexis",
+        "icon": "$(tools)"
+      },
+      {
+        "command": "junexis.artifacts.runTarget",
+        "title": "Uruchom wygenerowany target",
+        "category": "Junexis",
+        "icon": "$(play)"
+      },
+      {
+        "command": "junexis.artifacts.debugTarget",
+        "title": "Debuguj wygenerowany target",
+        "category": "Junexis",
+        "icon": "$(debug-alt)"
+      },
+      {
+        "command": "junexis.nativeDebug.openLastMappedSource",
+        "title": "Junexis: Otwórz ostatnią odwzorowaną ramkę natywną",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.debug.startCurrentBuild",
+        "title": "Junexis: Rozpocznij debugowanie bieżącej kompilacji",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.debug.runCncDemo",
+        "title": "Junexis: Uruchom demonstrator debugowania CNC",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.debug.runCncLiveDemo",
+        "title": "Junexis: Uruchom demonstrator debugowania CNC na żywo",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.debug.refresh",
+        "title": "Junexis: Odśwież widoki debugowania",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.debug.showTasks",
+        "title": "Junexis: Pokaż taski debugowania",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.debug.showTrace",
+        "title": "Junexis: Pokaż ślad debugowania",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.debug.showState",
+        "title": "Junexis: Pokaż stan debugowania",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.debug.syncBreakpoints",
+        "title": "Junexis: Zsynchronizuj punkty przerwania",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.debug.showBreakpoints",
+        "title": "Junexis: Pokaż punkty przerwania",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.debug.showLatestBreakpointHit",
+        "title": "Junexis: Pokaż ostatnie trafienie punktu przerwania",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.debug.showLatestDebugSnapshot",
+        "title": "Junexis: Pokaż ostatnią migawkę debugowania",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.debug.explainLatestDebugHit",
+        "title": "Junexis: Wyjaśnij ostatnie zatrzymanie debugera",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.debug.continueSession",
+        "title": "Junexis: Kontynuuj sesję debugowania",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.debug.explainEvent",
+        "title": "Junexis: Wyjaśnij zdarzenie debugowania",
+        "category": "Junexis"
+      },
+      {
+        "command": "junexis.debug.stopSession",
+        "title": "Junexis: Zatrzymaj sesję debugowania",
+        "category": "Junexis"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "junexisArtifacts",
+          "name": "Artefakty Junexis",
+          "when": "workspaceFolderCount > 0"
+        }
+      ],
+      "debug": [
+        {
+          "id": "junexisDebugSession",
+          "name": "Sesja debugowania Junexis",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "id": "junexisDebugTasks",
+          "name": "Taski debugowania Junexis",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "id": "junexisDebugTrace",
+          "name": "Ślad debugowania Junexis",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "id": "junexisDebugState",
+          "name": "Stan debugowania Junexis",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "id": "junexisDebugBreakpoints",
+          "name": "Punkty przerwania Junexis",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "id": "junexisNativeDebug",
+          "name": "Debugowanie natywne Junexis",
+          "when": "workspaceFolderCount > 0"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "junexisArtifacts",
+        "contents": "Nie wczytano artefaktów. Zbuduj projekt Junexis, aby odczytać jego wersjonowany inwentarz.\n[Zbuduj projekt](command:junexis.buildProject)\n[Pokaż stan](command:junexis.artifacts.showStatus)",
+        "when": "!junexis.hasArtifacts"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "junexis.compile",
+          "when": "resourceLangId == junexis",
+          "group": "navigation"
+        },
+        {
+          "command": "junexis.check",
+          "when": "resourceLangId == junexis",
+          "group": "navigation"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "junexis.artifacts.refresh",
+          "when": "view == junexisArtifacts",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "junexis.artifacts.buildTarget",
+          "when": "view == junexisArtifacts && viewItem =~ /junexisArtifactTarget\\.(server|report|embedded)/",
+          "group": "inline@1"
+        },
+        {
+          "command": "junexis.artifacts.runTarget",
+          "when": "view == junexisArtifacts && viewItem =~ /junexisArtifactTarget\\.(server|report|embedded)/",
+          "group": "inline@2"
+        },
+        {
+          "command": "junexis.artifacts.debugTarget",
+          "when": "view == junexisArtifacts && viewItem =~ /junexisArtifactTarget\\.(server|report|embedded)/",
+          "group": "inline@3"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Junexis",
+      "properties": {
+        "junexis.cliPath": {
+          "type": "string",
+          "default": "",
+          "description": "Ścieżka do CLI Junexis.\n• Program: /sciezka/do/junexis\n• DLL: /sciezka/do/JunexisLang.Compiler.CLI.dll (uruchamiany przez `dotnet`)\n• Pusta: wyszukuje `junexis` w PATH"
+        },
+        "junexis.checkOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatycznie uruchamiaj `junexis check` podczas zapisu"
+        },
+        "junexis.checkOnChange": {
+          "type": "boolean",
+          "default": true,
+          "description": "Uruchamiaj `junexis check` podczas pisania, z opóźnieniem 600 ms"
+        },
+        "junexis.lspPath": {
+          "type": "string",
+          "default": "",
+          "description": "Ścieżka do programu serwera LSP. Jeśli pusta, rozszerzenie szuka wariantu dla bieżącego systemu w standardowych lokalizacjach."
+        },
+        "junexis.languageServicesStartup": {
+          "type": "string",
+          "enum": [
+            "project",
+            "document"
+          ],
+          "enumDescriptions": [
+            "Rozgrzej LSP w tle po otwarciu folderu zawierającego junexis.project.toml.",
+            "Uruchom LSP dopiero po otwarciu dokumentu .jnx."
+          ],
+          "default": "project",
+          "description": "Określa moment uruchomienia usług językowych. Wstępne uruchomienie projektu następuje po przygotowaniu lekkiej powłoki rozszerzenia."
+        },
+        "junexis.mentorPath": {
+          "type": "string",
+          "default": "",
+          "description": "Ścieżka do programu CLI Mentora Junexis lub JunexisLang.Mentor.CLI.dll. Pusta wartość uruchamia wyszukiwanie w workspace, JUNEXIS_MENTOR_CLI i PATH."
+        },
+        "junexis.debug.traceCollectorUrl": {
+          "type": "string",
+          "default": "http://127.0.0.1:8080",
+          "description": "Adres HTTP TraceCollectora używany przez widoki debugowania Junexis."
+        },
+        "junexis.debug.traceCollectorPath": {
+          "type": "string",
+          "default": "",
+          "description": "Opcjonalna ścieżka do sprawdzonej dystrybucji TraceCollectora lub jej punktu wejścia. Pusta wartość wybiera backend dołączony dla bieżącej platformy."
+        },
+        "junexis.debug.narrativeRoot": {
+          "type": "string",
+          "default": "",
+          "description": "Opcjonalna ścieżka do repozytorium junexis-narrative, używana przez demonstrator debugowania CNC. Pusta wartość uruchamia wykrywanie w folderach workspace."
+        },
+        "junexis.debug.openMappedSource": {
+          "type": "boolean",
+          "default": true,
+          "description": "Otwieraj odwzorowane miejsce w źródle .jnx po wybraniu natywnej ramki stosu Go lub TypeScript."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "test:application-integration": "npm run compile && node --test test/application-session.integration.test.js",
+    "vscode:prepublish": "npm run compile && npm run bundle",
+    "compile": "tsc -p ./",
+    "bundle": "node esbuild.mjs",
+    "test": "npm run compile && node --test --test-concurrency=1 test/panel-readiness.test.js test/application-session.test.js test/activation-contract.test.js test/artifact-contract.test.js test/artifact-launch.test.js test/cli-contract.test.js test/cli-distribution.test.js test/diagnostic-story.test.js test/installation-paths.test.js test/language-consistency.test.js test/language-service-prewarm.test.js test/latest-build-contract.test.js test/lazy-service.test.js test/lsp-distribution.test.js test/lsp-package-matrix.test.mjs test/mentor-contract.test.js test/mentor-distribution.test.js test/mentor-policy.test.js test/mentor-refactoring.test.js test/performance-profile.test.js test/source-map-contract.test.js test/trace-collector-distribution.test.js",
+    "test:e2e:go-debug": "powershell -ExecutionPolicy Bypass -File test/e2e-go-debug-smoke.ps1",
+    "test:e2e:latest-build": "npm run compile && node test/e2e-latest-build.mjs",
+    "test:e2e:mentor-refactoring": "npm run compile && node test/e2e-mentor-refactoring.mjs",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package --no-dependencies"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.1",
+    "vscode-languageclient": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.0.0",
+    "esbuild": "^0.28.1",
+    "typescript": "^5.3.3"
+  }
+}

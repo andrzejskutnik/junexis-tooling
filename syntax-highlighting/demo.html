@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Junexis Syntax Highlighting Demo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="./prism-junexis.js"></script>
+</head>
+<body>
+  <h1>Junexis Syntax Highlighting Demo</h1>
+  <pre><code class="language-junexis">task SensorRead() @embedded(esp32) -> chan<SensorData> {
+  let pin = device.hardware.dht22_pin;
+  every 5s {
+    send read_sensor(pin);
+  }
+}
+</code></pre>
+</body>
+</html>

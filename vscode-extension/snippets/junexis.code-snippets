@@ -1,0 +1,372 @@
+{
+  "// ──────────── task ────────────": {},
+
+  "Task - minimal": {
+    "prefix": ["task", "task-min"],
+    "body": [
+      "task ${1:Name}() {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Minimalny task bez parametrów i platformy"
+  },
+
+  "Task - embedded": {
+    "prefix": ["task-emb", "task-embedded"],
+    "body": [
+      "task ${1:Name}(${2:input: chan<${3:T}>}) @embedded(\"${4:esp32c3}\") -> ${5:chan<${6:Out}>} {",
+      "\tloop {",
+      "\t\tlet ${7:msg} = recv ${2/^([a-z_]+).*/\\1/}",
+      "\t\tsend ${8:msg}",
+      "\t}",
+      "}"
+    ],
+    "description": "Task @embedded z kanałem wejściowym i wyjściowym"
+  },
+
+  "Task - server": {
+    "prefix": ["task-srv", "task-server"],
+    "body": [
+      "task ${1:Name}(${2:input: chan<${3:T}>}) @server -> ${4:chan<${5:Out}>} {",
+      "\tloop {",
+      "\t\tlet ${6:msg} = recv ${2/^([a-z_]+).*/\\1/}",
+      "\t\tsend ${6}",
+      "\t}",
+      "}"
+    ],
+    "description": "Task @server z pętlą"
+  },
+
+  "Task - with state": {
+    "prefix": ["task-state"],
+    "body": [
+      "task ${1:Name}() @${2:server} -> ${3:chan<${4:Int}>} {",
+      "\tstate ${5:counter}: ${4:Int} = ${6:0}",
+      "",
+      "\tevery ${7:1s} {",
+      "\t\t${5} += 1",
+      "\t\tsend ${5}",
+      "\t}",
+      "}"
+    ],
+    "description": "Task z polem state i pętlą every"
+  },
+
+  "Task - with config": {
+    "prefix": ["task-config"],
+    "body": [
+      "task ${1:Name}(${2:input: chan<${3:T}>}) @${4:server} -> ${5:chan<${3}>} {",
+      "\tconfig {",
+      "\t\t${6:max_rate}: Float : ${7:100.0}",
+      "\t\t${8:timeout}: Duration : ${9:5s}",
+      "\t}",
+      "",
+      "\tloop {",
+      "\t\tlet ${10:v} = recv ${2/^([a-z_]+).*/\\1/}",
+      "\t\tsend ${10}",
+      "\t}",
+      "}"
+    ],
+    "description": "Task z blokiem config"
+  },
+
+  "// ──────────── struct / enum ────────────": {},
+
+  "Struct": {
+    "prefix": "struct",
+    "body": [
+      "struct ${1:Name} {",
+      "\t${2:field}: ${3:Text}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Deklaracja typu strukturalnego"
+  },
+
+  "Enum": {
+    "prefix": "enum",
+    "body": [
+      "enum ${1:Name} {",
+      "\t${2:Variant1},",
+      "\t${3:Variant2},",
+      "\t$0",
+      "}"
+    ],
+    "description": "Deklaracja wyliczenia"
+  },
+
+  "// ──────────── fn ────────────": {},
+
+  "Pure function": {
+    "prefix": ["fn", "fn-pure"],
+    "body": [
+      "fn ${1:name}(${2:x: ${3:Int}}) -> ${4:Int} {",
+      "\t${2/^([a-z_]+).*/\\1/}",
+      "}"
+    ],
+    "description": "Czysta funkcja (fn)"
+  },
+
+  "// ──────────── communication ────────────": {},
+
+  "chan type": {
+    "prefix": "chan",
+    "body": "chan<${1:T}>",
+    "description": "Typ kanału synchronicznego"
+  },
+
+  "queue type": {
+    "prefix": "queue",
+    "body": "queue<${1:T}>",
+    "description": "Typ kolejki at-least-once"
+  },
+
+  "stream type": {
+    "prefix": "stream",
+    "body": "stream<${1:T}>",
+    "description": "Typ strumienia latest-wins"
+  },
+
+  "send statement": {
+    "prefix": "send",
+    "body": "send ${1:value}",
+    "description": "Wyślij wartość na wyjście taska"
+  },
+
+  "recv statement": {
+    "prefix": "recv",
+    "body": "let ${1:msg} = recv ${2:channel}",
+    "description": "Odbierz wartość z kanału"
+  },
+
+  "// ──────────── pipeline ────────────": {},
+
+  "Pipeline": {
+    "prefix": "pipeline",
+    "body": [
+      "pipeline ${1:Name} {",
+      "\tuse ${2:SourceTask};",
+      "\tuse ${3:ProcessTask};",
+      "\tuse ${4:SinkTask};",
+      "}"
+    ],
+    "description": "Deklaracja pipeline'u"
+  },
+
+  "Pipeline use step": {
+    "prefix": "use",
+    "body": "use ${1:TaskName};",
+    "description": "Krok pipeline'u"
+  },
+
+  "Pipeline use with port": {
+    "prefix": "use-port",
+    "body": "use ${1:TaskA}.${2:output} -> ${3:TaskB}.${4:input};",
+    "description": "Krok pipeline'u z jawnym portowaniem"
+  },
+
+  "// ──────────── device ────────────": {},
+
+  "Device": {
+    "prefix": "device",
+    "body": [
+      "device ${1:sensor_node} @embedded(\"${2:esp32c3}\") {",
+      "\thardware {",
+      "\t\t${3:pin}: u8 : ${4:4}",
+      "\t}",
+      "\tnetwork {",
+      "\t\tip: Text : \"${5:192.168.1.10}\"",
+      "\t}",
+      "}"
+    ],
+    "description": "Deklaracja urządzenia embedded"
+  },
+
+  "// ──────────── supervisor ────────────": {},
+
+  "Supervisor": {
+    "prefix": "supervisor",
+    "body": [
+      "supervisor ${1:Name} {",
+      "\tstrategy: ${2:restart}",
+      "\tmax_restarts: ${3:3}",
+      "\twindow: ${4:30s}",
+      "\tchildren: [${5:TaskA}, ${6:TaskB}]",
+      "}"
+    ],
+    "description": "Drzewo nadzoru (Erlang OTP style)"
+  },
+
+  "// ──────────── circuit_breaker ────────────": {},
+
+  "Circuit breaker": {
+    "prefix": ["circuit_breaker", "cb"],
+    "body": [
+      "circuit_breaker ${1:Name} {",
+      "\tfailure_threshold: ${2:5}",
+      "\topen_duration: ${3:30s}",
+      "\tsuccess_threshold: ${4:2}",
+      "}"
+    ],
+    "description": "Wzorzec odporności circuit breaker"
+  },
+
+  "// ──────────── narrative ────────────": {},
+
+  "Narrative": {
+    "prefix": "narrative",
+    "body": [
+      "narrative \"${1:Nazwa narracji}\" {",
+      "\tintent: \"${2:Cel systemu}\"",
+      "\tstakeholders: [\"${3:operator}\"]",
+      "\ttrace: ${4:full}",
+      "\tapplies_to: { ${5:PipelineName} }",
+      "}"
+    ],
+    "description": "Blok narrative (metadane semantyczne systemu)"
+  },
+
+  "// ──────────── deployment ────────────": {},
+
+  "Deployment": {
+    "prefix": "deployment",
+    "body": [
+      "deployment \"${1:Production}\" {",
+      "\ttargets: [${2:embedded}, ${3:server}]",
+      "\tnetwork: \"${4:192.168.1.0/24}\"",
+      "}"
+    ],
+    "description": "Konfiguracja wdrożenia wieloplatformowego"
+  },
+
+  "// ──────────── protocol ────────────": {},
+
+  "Protocol REST": {
+    "prefix": ["protocol-rest", "protocol"],
+    "body": [
+      "protocol ${1:rest} {",
+      "\tbase_url: \"${2:https://api.example.com/v1}\"",
+      "",
+      "\tendpoint GET /${3:resource} -> [${4:Item}]",
+      "\tendpoint GET /${3}/{id} -> ${4}",
+      "\tendpoint POST /${3} { body: ${5:CreateRequest} } -> ${4}",
+      "}"
+    ],
+    "description": "Deklaracja protokołu REST"
+  },
+
+  "// ──────────── control flow ────────────": {},
+
+  "every loop": {
+    "prefix": "every",
+    "body": [
+      "every ${1:1s} {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Pętla czasowa every"
+  },
+
+  "loop": {
+    "prefix": "loop",
+    "body": [
+      "loop {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Nieskończona pętla"
+  },
+
+  "match": {
+    "prefix": "match",
+    "body": [
+      "match ${1:value} {",
+      "\t${2:Pattern1} -> { $0 },",
+      "\t_ -> { }",
+      "}"
+    ],
+    "description": "Instrukcja match (pattern matching)"
+  },
+
+  "if-else": {
+    "prefix": "if",
+    "body": [
+      "if ${1:condition} {",
+      "\t$0",
+      "} else {",
+      "\t",
+      "}"
+    ],
+    "description": "Instrukcja warunkowa if-else"
+  },
+
+  "for-in": {
+    "prefix": "for",
+    "body": [
+      "for ${1:item} in ${2:collection} {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Pętla for-in"
+  },
+
+  "// ──────────── lifecycle hooks ────────────": {},
+
+  "on lifecycle hook": {
+    "prefix": "on",
+    "body": [
+      "on ${1:start} {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Hak cyklu życia taska (on start / on shutdown / ...)"
+  },
+
+  "// ──────────── import ────────────": {},
+
+  "Import module": {
+    "prefix": "import",
+    "body": "import ${1:module}::${2:name}",
+    "description": "Import modułu"
+  },
+
+  "Import symbols": {
+    "prefix": "import-symbols",
+    "body": [
+      "import ${1:module}::${2:submodule} {",
+      "\t${3:Symbol1},",
+      "\t${4:Symbol2},",
+      "}"
+    ],
+    "description": "Import wybranych symboli z modułu"
+  },
+
+  "// ──────────── state / let ────────────": {},
+
+  "State declaration": {
+    "prefix": "state",
+    "body": "state ${1:name}: ${2:Int} = ${3:0}",
+    "description": "Zmienna stanu taska"
+  },
+
+  "Let binding": {
+    "prefix": "let",
+    "body": "let ${1:name} = ${2:value}",
+    "description": "Lokalne wiązanie zmiennej"
+  },
+
+  "// ──────────── quirks ────────────": {},
+
+  "Quirks": {
+    "prefix": "quirks",
+    "body": [
+      "quirks \"${1:esp32c3}\" {",
+      "\t${2:usb_serial_bug} {",
+      "\t\tdescription: \"${3:Opis problemu sprzętowego}\"",
+      "\t\tworkaround: ${4:custom_logger}",
+      "\t}",
+      "}"
+    ],
+    "description": "Obejście błędu sprzętowego (quirks)"
+  }
+}

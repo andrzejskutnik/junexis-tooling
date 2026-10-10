@@ -1,0 +1,28 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Junexis Markdown Injection",
+  "scopeName": "junexis.markdown.codeblock",
+  "injectionSelector": "L:text.html.markdown",
+  "patterns": [
+    { "include": "#junexis-codeblock" }
+  ],
+  "repository": {
+    "junexis-codeblock": {
+      "begin": "(?:^|\\G)(\\s*)(```|~~~)(\\s*(?i:junexis|jnx)\\s*)$",
+      "beginCaptures": {
+        "1": { "name": "punctuation.whitespace.code.jnx" },
+        "2": { "name": "punctuation.definition.raw.markdown" },
+        "3": { "name": "fenced_code.block.language.junexis.markdown" }
+      },
+      "end": "^(\\s*)(\\2)\\s*$",
+      "endCaptures": {
+        "1": { "name": "punctuation.whitespace.code.jnx" },
+        "2": { "name": "punctuation.definition.raw.markdown" }
+      },
+      "contentName": "meta.embedded.block.junexis",
+      "patterns": [
+        { "include": "source.jnx" }
+      ]
+    }
+  }
+}

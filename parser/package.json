@@ -1,0 +1,41 @@
+{
+    "name": "@junexislang/parser",
+    "version": "0.8.3",
+    "description": "junexislang parser - generates AST from .jnx source files",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "watch": "tsc --watch",
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test:manual": "npm run build && node dist/test-manual.js",
+        "clean": "rimraf dist"
+    },
+    "keywords": [
+        "junexislang",
+        "parser",
+        "ast",
+        "compiler"
+    ],
+    "author": "junexislang Team",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/jest": "^29.5.12",
+        "@types/node": "^20.11.24",
+        "jest": "^29.7.0",
+        "rimraf": "^5.0.5",
+        "ts-jest": "^29.1.2",
+        "typescript": "^5.9.3"
+    },
+    "jest": {
+        "preset": "ts-jest",
+        "testEnvironment": "node",
+        "roots": [
+            "<rootDir>/src"
+        ],
+        "testMatch": [
+            "**/__tests__/**/*.test.ts"
+        ]
+    }
+}

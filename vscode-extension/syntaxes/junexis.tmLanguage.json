@@ -1,0 +1,285 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Junexis",
+  "scopeName": "source.jnx",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#triple-strings" },
+    { "include": "#raw-strings" },
+    { "include": "#strings" },
+    { "include": "#platform-annotations" },
+    { "include": "#declaration-names" },
+    { "include": "#keywords" },
+    { "include": "#builtin-types" },
+    { "include": "#numeric-types" },
+    { "include": "#communication-types" },
+    { "include": "#duration-memory-literals" },
+    { "include": "#numbers" },
+    { "include": "#operators" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.jnx",
+          "begin": "//",
+          "beginCaptures": { "0": { "name": "punctuation.definition.comment.jnx" } },
+          "end": "$",
+          "contentName": "comment.line.double-slash.jnx"
+        },
+        {
+          "name": "comment.block.jnx",
+          "begin": "/\\*",
+          "beginCaptures": { "0": { "name": "punctuation.definition.comment.jnx" } },
+          "end": "\\*/",
+          "endCaptures": { "0": { "name": "punctuation.definition.comment.jnx" } },
+          "contentName": "comment.block.jnx"
+        }
+      ]
+    },
+
+    "triple-strings": {
+      "name": "string.quoted.triple.jnx",
+      "begin": "\"\"\"",
+      "beginCaptures": { "0": { "name": "punctuation.definition.string.jnx" } },
+      "end": "\"\"\"",
+      "endCaptures": { "0": { "name": "punctuation.definition.string.jnx" } },
+      "contentName": "string.quoted.triple.jnx"
+    },
+
+    "raw-strings": {
+      "name": "string.quoted.raw.jnx",
+      "begin": "@\"",
+      "beginCaptures": { "0": { "name": "punctuation.definition.string.jnx" } },
+      "end": "\"",
+      "endCaptures": { "0": { "name": "punctuation.definition.string.jnx" } },
+      "patterns": [
+        { "name": "constant.character.escape.jnx", "match": "\"\"" }
+      ]
+    },
+
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.jnx",
+          "begin": "\"",
+          "beginCaptures": { "0": { "name": "punctuation.definition.string.jnx" } },
+          "end": "\"",
+          "endCaptures": { "0": { "name": "punctuation.definition.string.jnx" } },
+          "patterns": [
+            { "name": "constant.character.escape.jnx", "match": "\\\\." }
+          ]
+        },
+        {
+          "name": "string.quoted.single.jnx",
+          "begin": "'",
+          "beginCaptures": { "0": { "name": "punctuation.definition.string.jnx" } },
+          "end": "'",
+          "endCaptures": { "0": { "name": "punctuation.definition.string.jnx" } },
+          "patterns": [
+            { "name": "constant.character.escape.jnx", "match": "\\\\." }
+          ]
+        }
+      ]
+    },
+
+    "platform-annotations": {
+      "patterns": [
+        {
+          "name": "storage.modifier.platform.jnx",
+          "match": "@(embedded|server|report|edge|cloud_server|mobile|desktop|web|microcontroller|fog_node|data_center)\\b"
+        },
+        {
+          "name": "entity.other.attribute-name.jnx",
+          "match": "@[a-zA-Z_][a-zA-Z0-9_]*"
+        }
+      ]
+    },
+
+    "declaration-names": {
+      "patterns": [
+        {
+          "comment": "extern task Name",
+          "match": "\\b(extern)\\s+(task)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": { "name": "keyword.declaration.jnx" },
+            "2": { "name": "keyword.declaration.jnx" },
+            "3": { "name": "entity.name.function.jnx" }
+          }
+        },
+        {
+          "comment": "task Name",
+          "match": "\\b(task)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": { "name": "keyword.declaration.jnx" },
+            "2": { "name": "entity.name.function.jnx" }
+          }
+        },
+        {
+          "comment": "fn Name",
+          "match": "\\b(fn)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": { "name": "keyword.declaration.jnx" },
+            "2": { "name": "entity.name.function.jnx" }
+          }
+        },
+        {
+          "comment": "struct Name",
+          "match": "\\b(struct)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": { "name": "keyword.declaration.jnx" },
+            "2": { "name": "entity.name.type.jnx" }
+          }
+        },
+        {
+          "comment": "enum Name",
+          "match": "\\b(enum)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": { "name": "keyword.declaration.jnx" },
+            "2": { "name": "entity.name.type.jnx" }
+          }
+        },
+        {
+          "comment": "device Name",
+          "match": "\\b(device)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": { "name": "keyword.declaration.jnx" },
+            "2": { "name": "entity.name.class.jnx" }
+          }
+        },
+        {
+          "comment": "pipeline Name",
+          "match": "\\b(pipeline)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": { "name": "keyword.declaration.jnx" },
+            "2": { "name": "entity.name.class.jnx" }
+          }
+        },
+        {
+          "comment": "supervisor Name",
+          "match": "\\b(supervisor)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": { "name": "keyword.declaration.jnx" },
+            "2": { "name": "entity.name.class.jnx" }
+          }
+        },
+        {
+          "comment": "circuit_breaker Name",
+          "match": "\\b(circuit_breaker)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": { "name": "keyword.declaration.jnx" },
+            "2": { "name": "entity.name.class.jnx" }
+          }
+        },
+        {
+          "comment": "protocol Name",
+          "match": "\\b(protocol)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": { "name": "keyword.declaration.jnx" },
+            "2": { "name": "entity.name.class.jnx" }
+          }
+        }
+      ]
+    },
+
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.declaration.jnx",
+          "match": "\\b(task|struct|enum|fn|pipeline|device|native|config|import|narrative|deployment|supervisor|circuit_breaker|quirks|extern|type|protocol)\\b"
+        },
+        {
+          "name": "keyword.control.jnx",
+          "match": "\\b(if|else|for|in|match|every|loop|return|delay|parallel)\\b"
+        },
+        {
+          "name": "keyword.communication.jnx",
+          "match": "\\b(send|recv|to|from|ack|nack|broadcast|respond)\\b"
+        },
+        {
+          "name": "keyword.other.jnx",
+          "match": "\\b(let|const|var|state|use|on|as|log)\\b"
+        },
+        {
+          "name": "constant.language.boolean.jnx",
+          "match": "\\b(true|false)\\b"
+        },
+        {
+          "name": "keyword.operator.word.jnx",
+          "match": "\\b(and|or|not)\\b"
+        }
+      ]
+    },
+
+    "builtin-types": {
+      "name": "support.type.builtin.jnx",
+      "match": "\\b(Int|Float|Bool|Text|Symbol|Time|Duration|Map)\\b"
+    },
+
+    "numeric-types": {
+      "name": "support.type.numeric.jnx",
+      "match": "\\b(u8|u16|u32|u64|i8|i16|i32|i64|f32|f64)\\b"
+    },
+
+    "communication-types": {
+      "name": "support.type.communication.jnx",
+      "match": "\\b(chan|queue|stream)\\b"
+    },
+
+    "duration-memory-literals": {
+      "patterns": [
+        {
+          "name": "constant.numeric.duration.jnx",
+          "match": "\\b([0-9]+)(ns|us|ms|s|m|h|d)\\b",
+          "captures": {
+            "1": { "name": "constant.numeric.jnx" },
+            "2": { "name": "keyword.other.unit.jnx" }
+          }
+        },
+        {
+          "name": "constant.numeric.memory.jnx",
+          "match": "\\b([0-9]+)(KB|MB|GB|TB|PB)\\b",
+          "captures": {
+            "1": { "name": "constant.numeric.jnx" },
+            "2": { "name": "keyword.other.unit.jnx" }
+          }
+        }
+      ]
+    },
+
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.hex.jnx",
+          "match": "\\b0[xX][0-9a-fA-F][0-9a-fA-F_]*\\b"
+        },
+        {
+          "name": "constant.numeric.float.jnx",
+          "match": "\\b[0-9]+\\.[0-9]+([eE][+-]?[0-9]+)?\\b"
+        },
+        {
+          "name": "constant.numeric.integer.jnx",
+          "match": "\\b[0-9][0-9_]*\\b"
+        }
+      ]
+    },
+
+    "operators": {
+      "patterns": [
+        { "name": "keyword.operator.arrow.jnx",      "match": "->" },
+        { "name": "keyword.operator.arrow-left.jnx", "match": "<-" },
+        { "name": "keyword.operator.scope.jnx",      "match": "::" },
+        { "name": "keyword.operator.range.jnx",      "match": "\\.\\." },
+        { "name": "keyword.operator.compound.jnx",   "match": "\\+=|-=|\\*=|/=|%=" },
+        { "name": "keyword.operator.comparison.jnx", "match": "==|!=|<=|>=" },
+        { "name": "keyword.operator.arithmetic.jnx", "match": "[+\\-*/%]" },
+        { "name": "keyword.operator.relational.jnx", "match": "[<>]" },
+        { "name": "keyword.operator.assignment.jnx", "match": "=" },
+        { "name": "keyword.operator.pipe.jnx",       "match": "\\|" },
+        { "name": "keyword.operator.logical.jnx",    "match": "&&|\\|\\||!" },
+        { "name": "keyword.operator.reference.jnx",  "match": "&" },
+        { "name": "keyword.operator.conditional.jnx", "match": "\\?" }
+      ]
+    }
+  }
+}

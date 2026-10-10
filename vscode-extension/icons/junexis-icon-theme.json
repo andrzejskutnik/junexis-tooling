@@ -1,0 +1,88 @@
+{
+  "$schema": "vscode://schemas/icon-theme",
+  "iconDefinitions": {
+    "_file": {
+      "iconPath": "./file.svg"
+    },
+    "_folder": {
+      "iconPath": "./folder.svg"
+    },
+    "_folderOpen": {
+      "iconPath": "./folder-open.svg"
+    },
+    "jnx": {
+      "iconPath": "./jnx-file.svg"
+    },
+    "jnxProject": {
+      "iconPath": "./jnx-project.svg"
+    },
+    "srcFolder": {
+      "iconPath": "./src-folder.svg"
+    },
+    "embeddedFolder": {
+      "iconPath": "./embedded-folder.svg"
+    },
+    "serverFolder": {
+      "iconPath": "./server-folder.svg"
+    },
+    "reportFolder": {
+      "iconPath": "./report-folder.svg"
+    },
+    "userFolder": {
+      "iconPath": "./user-folder.svg"
+    },
+    "outFolder": {
+      "iconPath": "./out-folder.svg"
+    },
+    "junexisFolder": {
+      "iconPath": "./junexis-folder.svg"
+    },
+    "cacheFolder": {
+      "iconPath": "./cache-folder.svg"
+    },
+    "buildFolder": {
+      "iconPath": "./build-folder.svg"
+    },
+    "diagnosticsFolder": {
+      "iconPath": "./diagnostics-folder.svg"
+    }
+  },
+  "file": "_file",
+  "folder": "_folder",
+  "folderExpanded": "_folderOpen",
+  "languageIds": {
+    "junexis": "jnx"
+  },
+  "fileExtensions": {
+    "jnx": "jnx"
+  },
+  "fileNames": {
+    "junexis.project.toml": "jnxProject",
+    "junexis.toml": "jnxProject",
+    "main.jnx": "jnx"
+  },
+  "folderNames": {
+    "src": "srcFolder",
+    "user": "userFolder",
+    "out": "outFolder",
+    ".junexis": "junexisFolder",
+    "cache": "cacheFolder",
+    "build": "buildFolder",
+    "diagnostics": "diagnosticsFolder",
+    "embedded": "embeddedFolder",
+    "server": "serverFolder",
+    "report": "reportFolder"
+  },
+  "folderNamesExpanded": {
+    "src": "srcFolder",
+    "user": "userFolder",
+    "out": "outFolder",
+    ".junexis": "junexisFolder",
+    "cache": "cacheFolder",
+    "build": "buildFolder",
+    "diagnostics": "diagnosticsFolder",
+    "embedded": "embeddedFolder",
+    "server": "serverFolder",
+    "report": "reportFolder"
+  }
+}
