@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const test = require('node:test');
+const { currentRuntimeIdentifier } = require('../out/lsp-distribution.js');
 const {
     parseMentorDistributionManifest,
     resolveBundledMentor,
@@ -42,13 +43,17 @@ test('Mentor distribution rejects traversal and incompatible protocol', () => {
 });
 
 test('bundled Mentor resolves from runtime mentor RID directory', t => {
+    const runtimeIdentifier = currentRuntimeIdentifier();
     const extensionPath = fs.mkdtempSync(path.join(os.tmpdir(), 'junexis-mentor-distribution-'));
     t.after(() => fs.rmSync(extensionPath, { recursive: true, force: true }));
-    const directory = path.join(extensionPath, 'runtime', 'mentor', 'win-x64');
+    const directory = path.join(extensionPath, 'runtime', 'mentor', runtimeIdentifier);
     fs.mkdirSync(directory, { recursive: true });
     const entrypoint = path.join(directory, 'JunexisLang.Mentor.CLI.exe');
     fs.writeFileSync(entrypoint, 'test');
-    fs.writeFileSync(path.join(directory, 'junexis-mentor.json'), manifest());
+    fs.writeFileSync(
+        path.join(directory, 'junexis-mentor.json'),
+        manifest({ runtimeIdentifier }),
+    );
 
     const resolved = resolveBundledMentor(extensionPath);
 

@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const test = require('node:test');
+const { currentRuntimeIdentifier } = require('../out/lsp-distribution.js');
 const {
     parseCliDistributionManifest,
     resolveBundledCli,
@@ -42,13 +43,17 @@ test('CLI distribution rejects traversal and incompatible build protocol', () =>
 });
 
 test('bundled CLI resolves from runtime cli RID directory', t => {
+    const runtimeIdentifier = currentRuntimeIdentifier();
     const extensionPath = fs.mkdtempSync(path.join(os.tmpdir(), 'junexis-cli-distribution-'));
     t.after(() => fs.rmSync(extensionPath, { recursive: true, force: true }));
-    const directory = path.join(extensionPath, 'runtime', 'cli', 'win-x64');
+    const directory = path.join(extensionPath, 'runtime', 'cli', runtimeIdentifier);
     fs.mkdirSync(directory, { recursive: true });
     const entrypoint = path.join(directory, 'JunexisLang.Compiler.CLI.exe');
     fs.writeFileSync(entrypoint, 'test');
-    fs.writeFileSync(path.join(directory, 'junexis-cli.json'), manifest());
+    fs.writeFileSync(
+        path.join(directory, 'junexis-cli.json'),
+        manifest({ runtimeIdentifier }),
+    );
 
     const resolved = resolveBundledCli(extensionPath);
 
